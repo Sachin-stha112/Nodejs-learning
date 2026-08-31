@@ -4,8 +4,8 @@
   "description": "Leaning Node JS :))",
   "license": "MIT",
   "author": "Sachin Shrestha",
-  "type": "commonjs",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }
