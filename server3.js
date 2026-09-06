@@ -35,13 +35,7 @@ const jsonMiddleware = (req, res, next) =>
 
 /* Now setting up the handlers */
 
-const notGetHandler = (req, res) =>
-{
-    res.statusCode = 405
-    res.end (JSON.stringify({
-        message : "Method not Allowed"
-    }))
-}
+
 
 const getUsersHandler = (req, res) =>
 {
@@ -81,19 +75,35 @@ const routeNotFoundHandler = (req, res) =>
         message : "Route not found"
     }))
 }
+/* Handler for post methods */
+const createUserHandler = (req, res) => {
+    let body = '';
+    /* Listen for data */
+    req.on('data', (chunk) => {
+        body += chunk.toString();
+    })
+    /* Completed Listening */
+    req.on('end', () => {
+        const newUser = JSON.parse(body)
+        users.push(newUser)
+        res.statusCode = 201
+        res.end(JSON.stringify(newUser))
+    })
+}
+
 /* Creating Server */
 const server = http.createServer ((req, res) => {
     logger(req, res, () => {
         jsonMiddleware (req, res, () => {
-            if(req.method !== "GET")
+            if(req.url === "/api/users" && req.method === 'POST')
             {
-                notGetHandler(req,res)
+                createUserHandler(req,res)
             }
-            else if(req.url === "/api/users")
+            else if(req.url === "/api/users" && req.method === 'GET')
             {
                 getUsersHandler(req,res)
             }
-            else if(req.url.startsWith("/api/users/"))
+            else if(req.url.startsWith("/api/users/") && req.method === 'GET')
             {
                 getUserByIdHandler(req,res)
             }
