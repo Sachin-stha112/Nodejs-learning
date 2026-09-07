@@ -1,86 +1,79 @@
-import http from "http";
+import http from 'http'
 
-const PORT = 8000;
+const PORT = 8000
 
 const users = [
-  {
-    id: 1,
-    name: "Sachin",
-    email: "sachin@example.com",
-  },
-  {
-    id: 2,
-    name: "Ram",
-    email: "ram@example.com",
-  },
-  {
-    id: 3,
-    name: "Sita",
-    email: "sita@example.com",
-  },
-];
+    {
+        id: 1,
+        name: 'Sachin',
+        email: 'sachin@example.com',
+    },
+    {
+        id: 2,
+        name: 'Ram',
+        email: 'ram@example.com',
+    },
+    {
+        id: 3,
+        name: 'Sita',
+        email: 'sita@example.com',
+    },
+]
 
 /* Logger Middleware*/
-const logger = (req,res,next) => 
-{
-    console.log(`${req.method}  ${req.url}`);
-    next();
+const logger = (req, res, next) => {
+    console.log(`${req.method}  ${req.url}`)
+    next()
 }
 /* JSON Middleware: Set's Content-TYpe to application/json */
-const jsonMiddleware = (req, res, next) =>
-{
-    res.setHeader("Content-Type" , "application/json")
-    next();
+const jsonMiddleware = (req, res, next) => {
+    res.setHeader('Content-Type', 'application/json')
+    next()
 }
 
 /* Now setting up the handlers */
 
-
-
-const getUsersHandler = (req, res) =>
-{
+const getUsersHandler = (req, res) => {
     res.statusCode = 200
-    res.end (JSON.stringify(users))
+    res.end(JSON.stringify(users))
 }
 
-const userNotFoundHandler = (req,res) =>
-{
+const userNotFoundHandler = (req, res) => {
     res.statusCode = 404
-    res.end(JSON.stringify({
-        message : "User Not Found"
-    }))
+    res.end(
+        JSON.stringify({
+            message: 'User Not Found',
+        })
+    )
 }
 
-const getUserByIdHandler = (req,res) =>
-{
-    const id = req.url.split("/")[3]
+const getUserByIdHandler = (req, res) => {
+    const id = req.url.split('/')[3]
     const userId = Number(id) /* String to number */
     const user = users.find((user) => Number(user.id) === userId)
 
-    if(!user)
-    {
-        userNotFoundHandler(req,res);
-    }
-    else
-    {
+    if (!user) {
+        userNotFoundHandler(req, res)
+    } else {
         res.statusCode = 200
         res.end(JSON.stringify(user))
     }
 }
 
-const routeNotFoundHandler = (req, res) =>
-{
+const routeNotFoundHandler = (req, res) => {
     res.statusCode = 404
-    res.end(JSON.stringify({
-        message : "Route not found"
-    }))
+    res.end(
+        JSON.stringify({
+            message: 'Route not found',
+        })
+    )
 }
 /* Handler for post methods */
 const createUserHandler = (req, res) => {
-    let body = '';
+    let body = ''
     /* Listen for data */
     req.on('data', (chunk) => {
-        body += chunk.toString();
+        body += chunk.toString()
     })
     /* Completed Listening */
     req.on('end', () => {
@@ -92,28 +85,24 @@ const createUserHandler = (req, res) => {
 }
 
 /* Creating Server */
-const server = http.createServer ((req, res) => {
+const server = http.createServer((req, res) => {
     logger(req, res, () => {
-        jsonMiddleware (req, res, () => {
-            if(req.url === "/api/users" && req.method === 'POST')
-            {
-                createUserHandler(req,res)
-            }
-            else if(req.url === "/api/users" && req.method === 'GET')
-            {
-                getUsersHandler(req,res)
-            }
-            else if(req.url.startsWith("/api/users/") && req.method === 'GET')
-            {
-                getUserByIdHandler(req,res)
-            }
-            else 
-            {
+        jsonMiddleware(req, res, () => {
+            if (req.url === '/api/users' && req.method === 'POST') {
+                createUserHandler(req, res)
+            } else if (req.url === '/api/users' && req.method === 'GET') {
+                getUsersHandler(req, res)
+            } else if (
+                req.url.startsWith('/api/users/') &&
+                req.method === 'GET'
+            ) {
+                getUserByIdHandler(req, res)
+            } else {
                 routeNotFoundHandler(req, res)
             }
         })
     })
 })
 server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+    console.log(`Server running at http://localhost:${PORT}`)
+})
