@@ -1,25 +1,31 @@
 import fs from 'node:fs/promises'
+async function handleFile()
+{
+    let fileHandle;
+    try {
+        // opening a file
+        fileHandle = await fs.open('demo.txt', 'w+')
+        console.log('File opened successfully')
+        // writing into a file
+        await fileHandle.writeFile('Hello there!\nbackend is boring af')
+        console.log('File written successfully')
+        // Reading file
 
-async function readAll(fileHandle) {
-    const size = (await fileHandle.stat()).size
-    const buffer = Buffer.alloc(size)
-    await fileHandle.read(buffer, 0, size, 0)
-    return buffer.toString('utf8')
+        // object destructing
+        const { bytesRead, buffer } = await fileHandle.read({
+            buffer: Buffer.alloc(1024),
+            position: 0,
+        })
+        // converting content of buffer into string and storing in content variable
+        const content = buffer.subarray(0, bytesRead).toString('utf8')
+
+        console.log('File content: ')
+        console.log(content)
+    } catch (error) {
+        console.error('Something went wrong:', error)
+    } finally {
+        await fileHandle.close()
+        console.log('File Closed')
+    }
 }
-
-const fileHandle = await fs.open('demo.txt', 'w+')
-console.log('File opened successfully')
-
-try {
-    /* Write data to the file */
-    await fileHandle.writeFile('Hello from Node.js\nThis is Sachin Shrestha')
-
-    /* Read data back from the file */
-    const content = await readAll(fileHandle)
-    console.log('File Content: ')
-    console.log(content)
-} catch (error) {
-    console.error('Something went wrong: ', error)
-} finally {
-    await fileHandle.close()
-}
+handleFile()
