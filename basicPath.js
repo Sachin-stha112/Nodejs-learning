@@ -26,3 +26,10 @@ const absolutePath = path.resolve(
 )
 console.log(absolutePath)
 
+/*Resolve() process from right to left*/
+const absolutePath2 = path.resolve(
+    "/first",
+    "/second",
+    "third"
+)
+console.log(absolutePath2) // stops at second because of '/'
