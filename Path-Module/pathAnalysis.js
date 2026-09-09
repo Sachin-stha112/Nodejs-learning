@@ -8,3 +8,8 @@ console.log("Basename without extension: ", path.basename(filePath, ".txt"))
 
 // dirname() : Give you everything other than basename
 console.log("Directory name: ", path.dirname(filePath))
+
+// extname() : Gives extension of the file
+console.log("Extension name: ", path.extname(filePath))
+
+
