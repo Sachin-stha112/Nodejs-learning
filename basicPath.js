@@ -42,3 +42,9 @@ const cleanPath = path.normalize(messyPath)
 console.log("Before, Messy Path:  ", messyPath)
 console.log("After, Normalized Path: ", cleanPath)
 
+// path.relative : returns relative path from the first path to the second path
+
+const from = '/Nodejs-learn/public/src'
+const to = '/Nodejs-learn'
+const relativePath = path.relative(from, to)
+console.log("Relative Path is  " ,relativePath)
