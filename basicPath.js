@@ -48,3 +48,11 @@ const from = '/Nodejs-learn/public/src'
 const to = '/Nodejs-learn'
 const relativePath = path.relative(from, to)
 console.log("Relative Path is  " ,relativePath)
+
+// isAbsolute() : returns true for non-exsistence path as well 
+// These do NOT exist on your computer, but path.isAbsolute() doesn't care:
+console.log(path.isAbsolute('/this/path/is/fake.txt')); 
+// Output: true (because it starts with '/')
+
+console.log(path.isAbsolute('documents/photos/vacation.jpg')); 
+// Output: false (because it's relative)
