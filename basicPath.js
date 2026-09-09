@@ -7,3 +7,15 @@ const joinedPath = path.join(
     "home.html"
 )
 console.log(joinedPath)
+
+// path.join with handling
+const joinedWithNavigation = path.join(
+    "Nodejs-learn",
+    "public",
+    "..",
+    "src",
+    "demo.txt"
+)
+console.log(joinedWithNavigation)
+
+// 
