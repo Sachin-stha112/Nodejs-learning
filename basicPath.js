@@ -18,4 +18,11 @@ const joinedWithNavigation = path.join(
 )
 console.log(joinedWithNavigation)
 
-// 
+// path.resolve()
+const absolutePath = path.resolve(
+    "Nodejs-learn",
+    "public",
+    "home.html"
+)
+console.log(absolutePath)
+
