@@ -41,3 +41,11 @@ delete parts.base
 const newPath = path.format(parts)
 console.log('New Path: ', newPath)
 
+
+// win32: let's you work with window path in other os as well,
+// posix: let's you work with mac and linux path in other os as well
+const windowsPath = 'C:\\Users\\John\\Documents\\report.pdf'
+console.log('WIN32 basename:', path.win32.basename(windowsPath))
+console.log('WIN32 dirname:', path.win32.dirname(windowsPath))
+console.log('WIN32 parsed:', path.win32.parse(windowsPath))
+console.log('WIN32 absolute:', path.win32.isAbsolute(windowsPath))
