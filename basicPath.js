@@ -33,3 +33,12 @@ const absolutePath2 = path.resolve(
     "third"
 )
 console.log(absolutePath2) // stops at second because of '/'
+
+
+// path.normalize()
+const messyPath = '/users/./john/documents/../photos//profile.jpg'
+
+const cleanPath = path.normalize(messyPath)
+console.log("Before, Messy Path:  ", messyPath)
+console.log("After, Normalized Path: ", cleanPath)
+
