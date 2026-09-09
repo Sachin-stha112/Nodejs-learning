@@ -10,6 +10,21 @@ console.log("Basename without extension: ", path.basename(filePath, ".txt"))
 console.log("Directory name: ", path.dirname(filePath))
 
 // extname() : Gives extension of the file
-console.log("Extension name: ", path.extname(filePath))
+console.log("Extension: ", path.extname(filePath))
+console.log('extension:', path.extname('archive.tar.gz'))
+console.log('extension:', path.extname('README'))
+console.log('extension:', path.extname('.env'))
 
+// parse() : Break path into pieces i.e PATH -> OBJECT
+const parsedPath = path.parse(filePath)
+console.log("parse: ", parsedPath)
+console.log("dir: ", parsedPath.dir) // can request for seperate oiece/object
+
+// format() : Build path from pieces   OBJECT → PATH
+const formattedPath = path.format({
+    dir: '/app/uploads',
+    name: 'profile',
+    ext: '.png',
+})
+console.log("Formatted path: ", formattedPath)
 
